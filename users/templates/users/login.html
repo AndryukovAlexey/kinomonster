@@ -1,0 +1,32 @@
+{% extends 'movies/main.html' %}
+
+      
+    {% block content %}
+         
+            <form method="POST">
+                {% csrf_token %}
+
+                <h2 style="margin-bottom: 20px;">Авторизация</h2>
+
+                {% if form.errors %}
+                    <p>Вы ввели неправильный логин или пароль!</p>
+                {% endif %}
+                <div class="form-group">
+                                       
+                    <input type="text " name="username" class="form-control input-lg" placeholder="Ваше имя или электорнная почта: ">
+                </div>
+                <div class="form-group">
+                    <input name="password" type="password" class="form-control input-lg" placeholder="Ваш пароль: ">
+                </div> 
+
+                
+            
+                <button class="btn btn-lg btn-warning pull-right">Войти</button>
+            </form>
+
+            
+
+            <button><a href="/accounts/login/vk-oauth2">vk log</a></button>
+            <button><a href="/accounts/login/google-oauth2">google log</a></button>
+
+    {% endblock %}

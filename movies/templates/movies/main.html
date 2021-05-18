@@ -1,0 +1,202 @@
+{% load static %}
+{% url 'films-page' as movie %}
+{% url 'home-page' as home %}
+{% url 'serials-page' as serial %}
+{% url 'rating-page' as rating %}
+{% url 'cont-page' as support %}
+{% url 'single-page' as show %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="enot" content="7711618019526D5dP_ky_4LrdDK8g_0QSpHigEqThGPvN" />
+    {% if movie_pg %}
+      <title>{{movie_pg.title}}</title>
+    {% elif serial_pg %}
+      <title>{{serial_pg.title}}</title>
+    {% elif userik %}
+      <title>{{userik.username}}</title>
+    {% else %}
+      <title>{{title}}</title>
+    {% endif %}
+
+    
+    <link href="{% static 'movies/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'movies/css/style.css' %}" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="{% static 'movies/favicon.ico' %}" type="image/x-icon">
+   
+  </head>
+  <body>
+    
+
+    <div class="container-fluid"> 
+      <div class="row">
+        <nav role="navigation" class="navbar navbar-inverse">
+          <div class="container">
+          <div class="navbar-header header">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h1><a href="{% url 'home-page' %}">КиноМонстр</a></h1>
+                  <p>Кино - наша страсть!</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+              <span class="sr-only">toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+
+            </button>
+              
+          </div>
+            <div id="navbarCollapse" class="collapse navbar-collapse navbar-right">
+
+              <ul class="nav nav-pills">
+                <li {% if request.path == home %} class="active"{% endif %}>  <a href="{% url 'home-page' %}">Главная</a> </li>
+                <li {% if request.path == movie %} class="active"{% endif %}> <a href="{% url 'films-page' %}">Фильмы</a> </li>
+                <li {% if request.path == serial %} class="active"{% endif %}> <a href="{% url 'serials-page' %}">Сериалы</a> </li>
+                <li {% if request.path == rating %} class="active"{% endif %}> <a href="{% url 'rating-page' %}">Рейтинг фильмов</a> </li>
+                <li {% if request.path == support %} class="active"{% endif %}> <a href="{% url 'cont-page' %}">Поддержка</a> </li>
+              </ul>
+              
+            </div>
+          
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="container">
+        <div class="row">
+          
+  
+
+          <div class="col-lg-9 col-sm-push-3">
+            <form role="search" class="visible-xs">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="search" class="form-control input-lg" placeholder="Ваш запрос">
+
+                      <div class="input-group-btn">
+                        <button class="btn btn-default btn-lg" type="submit">
+                          <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                    
+                  </div>
+            </form>
+          
+        
+        {% if messages %}
+          <div class="alert" style="background-color: yellow;">
+            {% for text in messages %}
+            {{text}}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% block content %}
+            
+        {% endblock %}
+
+        </div>
+
+        <div class="col-lg-3 col-sm-pull-9">
+          
+          <div class="panel panel-info hidden-xs">
+            <div class="panel-heading"><div class="sidebar-header">Поиск</div></div>
+            <div class="panel-body">
+              <form role="search" method="GET" action="{% url 'search-page' %}">
+                <div class="form-group">
+                  <div class="input-group">
+                  <input type="search" class="form-control input-lg" placeholder="Ваш запрос" name="q">
+        
+                  <div class="input-group-btn">
+                    <button class="btn btn-default btn-lg" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                  </div>
+                  </div>
+                  
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-info">
+              {% if user.is_authenticated %}
+                <div class="panel-heading"><div class="sidebar-header">Профиль</div></div>
+                <div class="panel-body">
+                  <p><a href="{% url 'profile' username=user.username %}">профиль</a></p><p><a href="{% url 'logout-page' %}">выйти</a></p> 
+                </div>
+            {% else %}
+              <div class="panel-heading"><div class="sidebar-header">Вход</div></div>
+              <div class="panel-body">
+                <p><a href="{% url 'login-page' %}">Войти</a></p><p><a href="{% url 'reg-page' %}">Зарегистрироваться</a></p>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="panel panel-info">
+            <div class="panel-heading"><div class="sidebar-header">Новости</div></div>
+            <div class="panel-body">
+              
+              {% for new in news %}
+                  
+                  <p>{{new.date}}</p>                  
+                  <p>{{new.text}}</p>
+                  <hr class="{% cycle 'row1' 'row2' 'hidden' %}">
+                  
+              {% endfor %}
+              
+
+              
+            </div>
+          </div>
+
+          <div class="panel panel-info">
+            <div class="panel-heading"><div class="sidebar-header">Рейтинг фильмов</div></div>
+            <div class="panel-body">
+              <ul class="list-group">
+
+                {% for rat in rat_movie %}
+                  <li class="list-group-item list-group-warning">
+                    <span class="badge">{{rat.rating}}</span>
+                    <a href="{% url 'single-page' rat.id %}">{{rat.title}}</a>
+                  </li>
+                {% endfor %}
+
+                
+            </div>
+          </div>
+
+        </div>
+
+
+        </div>
+      </div>
+      <div class="clear">
+        
+      </div>
+    </div>
+    
+
+    <div class="footer" style="background-color: black;">
+      <div class="container">
+        <!-- <p class="text-center"><a href="https://youtube.com/">YouTube</a></p> -->
+        <a href="https://vk.com/pit0nov"><img style="float: right;" src="{% static 'movies/img/vk.png' %}" alt="" width="35"></a>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'movies/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

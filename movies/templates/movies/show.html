@@ -1,0 +1,146 @@
+{% extends 'movies/main.html' %}
+    {% block content %}
+      
+        {% if movie_pg %}
+          <h1>{{movie_pg.title}}</h1>
+          <hr>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{{movie_pg.movie}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="well info-block text-center">
+            Год: <span class="badge">{{movie_pg.year}}</span>
+            Рейтинг: <span class="badge">{{movie_pg.rating}}</span>
+            Режиссер: <span class="badge">{{movie_pg.author}}</span>
+            
+            {% if request.user.is_authenticated %}
+            
+              <form style="float: right; padding-right: 120px;" method="POST">
+                {% csrf_token %}
+                {% for like in like_mov %}
+                  <button type="submit" name="unlike" class="btn btn-danger btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>unlike</button>
+                {% empty %}
+                  <button type="submit" name="like" class="btn btn-success btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>like  {{likes}} </button>
+                {% endfor %}
+              </form>
+            {% else %}
+              <button type="submit" name="like" class="btn btn-success btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>like  {{likes}} </button>
+            {% endif %}                  
+
+          </div>
+
+          <div class="margin-8"></div>
+
+          <h2>Описание {{movie_pg.title}}</h2>
+            
+          
+          <hr>
+
+          <div class="well">{{movie_pg.description}}</div>
+          <div class="margin-8"></div>
+
+          <h2>Отзывы об {{movie_pg.title}}</h2>
+          
+          
+          {% for com in comm %}
+          
+            {% if com.movie == movie_pg %}
+              <div class="panel panel-info">
+                <div class="panel-heading"><img class="img-circle" src="{{com.avatar.url}}" alt="" height="30px" width="30px"><span> {{com.user}}</span></div>
+                <div class="panel-body">
+                  {{com.text}}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% if request.user.is_authenticated %}
+            <form method="POST" action="{% url 'film_add_review' movie_pg.id %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <textarea class="form-control" name="text"></textarea>
+              </div>
+              
+              
+              <button class="btn btn-lg btn-warning pull-right">отправить</button>
+              
+            </form>
+          {% else %}
+            <h3>Чтобы оставить отзыв - <a href="{% url 'login-page' %}"> авторизуйтесь</a></h3>
+          {% endif %}
+
+          <div class="margin-8 clear"></div>
+        {% else %}
+
+          {% if request.user.is_authenticated %}
+            {% if abiba in request.user.groups.all %}
+
+              
+              <h1>{{serial_pg.title}}</h1>
+              <hr>
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{{serial_pg.movie}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="well info-block text-center">
+                Год: <span class="badge">{{serial_pg.year}}</span>
+                Рейтинг: <span class="badge">{{serial_pg.rating}}</span>
+                Режиссер: <span class="badge">{{serial_pg.author}}</span>
+
+                {% if request.user.is_authenticated %}
+                
+                  <form style="float: right; padding-right: 120px;" method="POST">
+                    {% csrf_token %}
+                    {% for like in like_ser %}
+                      <button type="submit" name="unlike" class="btn btn-danger btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>unlike</button>
+                    {% empty %}
+                      <button type="submit" name="like" class="btn btn-success btn-primary btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>like</button>
+                    {% endfor %}
+                  </form>
+                {% endif %}
+              </div>
+
+              <div class="margin-8"></div>
+
+              <h2>Описание {{serial_pg.title}}</h2>
+              <hr>
+
+              <div class="well">{{serial_pg.description}}</div>
+              <div class="margin-8"></div>
+
+              <h2>Отзывы об {{serial_pg.title}}</h2>
+
+              {% for com in comm %}
+              
+                {% if com.serial == serial_pg %}
+                  <div class="panel panel-info">
+                    <div class="panel-heading"><img class="img-circle" src="{{com.avatar.url}}" alt="" height="30px" width="30px"><span> {{com.user}}</span></div>
+                    <div class="panel-body">
+                      {{com.text}}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+              
+              {% if request.user.is_authenticated %}
+                <form method="POST" action="{% url 'serial_add_review' serial_pg.id %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <textarea class="form-control" name="text"></textarea>
+                  </div>
+                  <button class="btn btn-lg btn-warning pull-right">отправить</button>
+                  
+                </form>
+              {% else %}
+                <h3>Чтобы оставить отзыв - <a href="{% url 'login-page' %}"> авторизуйтесь</a></h3>
+              {% endif %}
+
+
+              <div class="margin-8 clear"></div>
+            {% else %}
+              <h1>Станьте абибой!</h1>
+              <a href="{% url 'profile' username=user.username %}">тык</a>
+            {% endif %}
+          {% else %}
+            <h2>Сначала <a href="{% url 'login-page' %}"> авторизуйтесь</a></h2>
+          {% endif %}
+        {% endif %}
+    {% endblock %}      
+        

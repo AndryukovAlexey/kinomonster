@@ -1,0 +1,24 @@
+{% extends 'movies/main.html' %}     
+        
+    {% block content %}
+        <div class="row">
+            {% for movie in mov %}
+                <div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <a href="{% url 'single-page' movie.id %}"><img src="{{movie.poster.url}}" alt="{{film.title}}"></a>
+                    <div class="film_label"><a href="{% url 'single-page' movie.id %}">{{movie.title}}</a></div>
+                </div>
+            {% endfor %}
+            {% for serial in ser %}
+                <div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                    <a href="{% url 'single_ser-page' serial.id %}"><img style="height: 250px;" src="{{serial.poster.url}}" alt="{{film.title}}"></a>
+                    <div class="film_label"><a href="{% url 'single_ser-page' serial.id %}">{{serial.title}}</a></div>
+                </div>
+            {% endfor %}
+
+            {% if mist %}
+                <h2 style="margin-left: 260px; margin-top: 30px;">{{mist}}</h2>
+            {% endif %}
+            
+        </div>
+    {% endblock %}
+    

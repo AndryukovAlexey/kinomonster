@@ -1,0 +1,38 @@
+{% extends 'movies/main.html' %}
+		{% block content %}
+
+          <h1>Рейтинг фильмов</h1>
+          <hr>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Фильм</th>
+                <th class="text-center">Год</th>
+                <th class="text-center">Рейтинг</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for rat in ratin %}
+               
+                {% for rr in rat %}
+                  <tr>
+                    <td class="col-lg-1 col-md-1 col-xs-2">
+                      <img class="img-responsive img-thumbnail" src="{{rr.poster.url}}" alt=""><p>{{rr.title}}</p>
+                    </td>
+                    <td class="vert-align"><a href="show.html"></a></td>
+                    <td class="text-center vert-align">{{rr.year}}</td>
+                    <td class="text-center vert-align"><span class="badge">{{rr.rating}}</span></td>
+
+                  </tr>
+                {% endfor %}
+              {% endfor %}
+
+            </tbody>
+          </table>
+    {% endblock %}      
+          
+
+        

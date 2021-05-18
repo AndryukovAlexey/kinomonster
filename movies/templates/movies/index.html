@@ -1,0 +1,38 @@
+{% extends 'movies/main.html' %}
+		{% block content %}
+			<h2>Новые фильмы</h2>
+
+			<hr>
+			
+			<div class="row">
+				{% for film in movies %}
+					<div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
+						<a href="{% url 'single-page' film.id %}"><img src="{{film.poster.url}}" alt="{{film.title}}"></a>
+						<div class="film_label"><a href="{% url 'single-page' film.id %}">{{film.title}}</a></div>
+					</div>
+				{% endfor %}
+				
+
+
+			</div>
+			<div class="margin-8"></div>
+			<h2>Новые сериалы</h2>
+			<hr>
+			
+			<div class="row">
+				{% for serial in serials %}
+					<div class="films_block col-lg-3 col-md-3 col-sm-3 col-xs-6">
+						<a href="{% url 'single_ser-page' serial.id %}"><img style="height: 250px;" src="{{serial.poster.url}}" alt="{{serial.title}}"></a>
+						<div class="film_label"><a href="{% url 'single_ser-page' serial.id %}">{{serial.title}}</a></div>
+					</div>
+				{% endfor %}				
+				
+			</div>
+							
+			<div class="margin-8"></div>
+
+		{% endblock %}
+
+			
+
+		

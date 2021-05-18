@@ -1,0 +1,53 @@
+{% extends 'movies/main.html' %}
+    
+        
+    {% block content %}
+        <img src="{{userik.profile.avatar.url}}" alt="" width="140px" height="140px">
+        <p>name: {{userik.username}}</p>
+        {% if request.user == userik %}
+            <div>
+                <!-- <form method="GET" action="{% url 'pay-page' %}">
+                    <input style="width: 20%" class="form-control" type="text" name="text">
+                    <button class="btn btn-default">ГЫ</button>
+                </form> -->
+                {% if abiba in request.user.groups.all %}                  
+                    <h3>Вы абиба!! Вам доступны сериалы!</h3>
+                {% else %}
+                    <h3>Вы абоба!! Оплатите и станьте абибой!</h3>
+                    <h3>Покупка подписки на 1 месяц</h3>
+                    <form method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+                        <input type="hidden" name="receiver" value="4100115808409193">
+                        <input type="hidden" name="formcomment" value="Покупка подписки djangomonster">
+                        <input type="hidden" name="short-dest" value="Покупка подписки djangomonster">
+                        <input type="hidden" name="label" value="{{request.user}}">
+                        <input type="hidden" name="quickpay-form" value="small">
+                        <input type="hidden" name="successURL" value="http://80.249.150.17:8000/order/success/">
+                        <input type="hidden" name="targets" value="Покупка подписки">
+                        <input type="hidden" name="sum" value="2.00" data-type="number">
+                        <!-- <input type="hidden" name="comment" value="Хотелось бы дистанционного управления."> -->
+                        <input type="hidden" name="need-fio" value="false">
+                        <input type="hidden" name="need-email" value="false">
+                        <input type="hidden" name="need-phone" value="false">
+                        <input type="hidden" name="need-address" value="false">
+                        <!-- <label><input type="radio" name="paymentType" value="PC">ЮMoney</label> -->
+                        <!-- <input type="radio" name="paymentType" value="AC">Банковской картой</label> -->
+                        <input type="submit" value="Оплатить">
+                    </form>
+                {% endif %}
+
+                
+                
+            </div>
+            
+            <a href="{% url 'profile-update' %}">изменить данные профиля</a>
+
+            <div style="margin-top: 30px;"><p>понравившиеся:</p>
+                {% for lik in like %}
+                    {% if lik.user == request.user %}
+                        {{lik.name}}<br>
+                    {% endif %}
+                {% endfor %}</div>
+                      
+        {% endif %}
+    {% endblock %}
+

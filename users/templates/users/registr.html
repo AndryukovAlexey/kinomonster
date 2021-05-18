@@ -1,0 +1,47 @@
+{% extends 'movies/main.html' %}     
+        
+    {% block content %}
+        {% if mist %}
+            {{mist}}
+        {% endif %}
+        <form role="form" method="POST">
+            <h1 style="margin-bottom: 30px;">Регистрация</h1>
+            <div class="form-group">
+                {% csrf_token %}
+                <div style="margin-bottom: 25px;" class="form-group">
+                    
+                    <h4>Имя:</h4>
+                    {% if form.username.errors %}
+                        {{form.username.errors}}
+                    {% endif %}
+                    {{form.username}}
+                </div>
+                <div style="margin-bottom: 25px;" class="form-group">
+                    <h4>Email:</h4>
+                    {% if error %}
+                        <li>{{error}}</li>
+                    {% endif %}
+                    {% if form.email.errors %}
+                        {{form.email.errors}}
+                    {% endif %}
+                    {{form.email}}
+                </div>
+                <div style="margin-bottom: 15px;" class="form-group">
+                    <h4>Пароль:</h4>
+                    {% if form.password1.errors %}
+                        {{form.password1.errors}}
+                    {% endif %}
+                    {{form.password1}}
+                </div>
+                <div style="margin-bottom: 25px;" class="form-group">
+                    {% if form.password2.errors %}
+                        {{form.password2.errors}}
+                    {% endif %}
+                    {{form.password2}}
+                </div>
+                    
+                
+            </div>
+            <button style="width: 120px; height: 45px;" type="submit" class="btn btn-warning pull-right">Зарегаться</button>
+        </form>
+    {% endblock %}

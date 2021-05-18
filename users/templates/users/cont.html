@@ -1,0 +1,31 @@
+{% extends 'movies/main.html' %}
+		{% block content %}
+
+          <h1>Поддержка</h1>
+          <hr>
+          {% if request.user.is_authenticated %}
+          
+            <p class="font">Расскажите о вашей проблеме и мы попытемся ее решить</p>
+
+            <form method="POST">
+              {% csrf_token %}
+
+              
+              
+              <div class="form-group">
+                <input type="text" class="form-control input-lg" placeholder="тема" name="theme">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="text"></textarea>
+              </div>
+              <button class="btn btn-lg btn-warning pull-right">отправить</button>
+            </form>
+
+          {% else %}
+            <h2>Сначала <a href="{% url 'login-page' %}"> авторизуйтесь</a></h2>
+            
+          {% endif %}
+          
+    {% endblock %}      
+
+        

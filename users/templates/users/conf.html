@@ -1,0 +1,20 @@
+{% extends 'movies/main.html' %}     
+        
+    {% block content %}
+        <form method="POST">
+            {% csrf_token %}
+
+            <h2 style="margin-bottom: 20px;">Подтверждение почты</h2>
+
+            {% if form.errors %}
+                <p>Неправильный формат!</p>
+            {% endif %}
+
+
+            <div class="form-group">                               
+                <input type="text " name="cnf" class="form-control input-lg" placeholder="Ваше имя">
+            </div>
+ 
+            <button class="btn btn-lg btn-warning pull-right">Войти</button>
+        </form>
+    {% endblock %}

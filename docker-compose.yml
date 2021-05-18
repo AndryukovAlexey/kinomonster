@@ -1,0 +1,66 @@
+version: "3.7"
+
+
+services: 
+    kinomonster:
+        build: .
+        container_name: kinomonster
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes: 
+            - .:/usr/src/kinomonster/
+            - ./db:/usr/src/kinomonster/db/
+        ports: 
+            - "8000:8000"
+        depends_on: 
+            - redis
+    
+    celery-worker:
+        build: .
+        container_name: celery-worker
+        entrypoint: celery
+        command: -A kinomonster worker -l info --pool=solo
+        volumes: 
+            - .:/usr/src/kinomonster/
+        depends_on:
+            - kinomonster
+            - redis
+    
+    celery-beat:
+        build: .
+        container_name: celery-beat
+        entrypoint: celery
+        command: -A kinomonster beat -l info -s /usr/src/kinomonster/celerybeat-schedule/celerybeat-schedule
+        volumes:
+            - .:/usr/src/kinomonster/
+        depends_on:
+            - celery-worker
+            - redis
+
+    flower:
+        build: .
+        container_name: flower
+        command: flower -A kinomonster --basic_auth=admin:aboba228
+        volumes:
+            - .:/usr/src/kinomonster/
+        ports:
+            - 5555:5555
+
+        depends_on:
+            - redis
+            - celery-worker
+            - celery-beat
+            - kinomonster
+    
+    redis:
+        image: redis
+        container_name: redis
+        command: redis-server /usr/src/kinomonster/redis/redis.conf --requirepass dklafjruwqrujlkafionjoqwri09tuwq90tiqw9uttlskndlkjhfhjflhjdf
+        volumes: 
+            - ./redis/:/usr/src/kinomonster/redis/
+        ports: 
+            - "6379:6379"
+
+        sysctls:
+            net.core.somaxconn: 65535
+    
+
