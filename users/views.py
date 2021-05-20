@@ -219,7 +219,7 @@ def check_order(request):
 		datetime = request.POST.get('datetime')
 		sender = request.POST.get('sender')
 		codepro = request.POST.get('codepro')
-		notification_secret = 'otdjWvb5L/ny+m9CdBuwLrKV'
+		notification_secret = ''
 		label = request.POST.get('label')
 		sha1_hash = request.POST.get('sha1_hash')
 
