@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3ac0ymm*+wn71k=_5l3qx=nv%=9%1!$!c3$993$artit_sr2rm'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,7 +141,7 @@ LOGIN_REDIRECT_URL = 'home-page'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'helpkinomonster@gmail.com'
-EMAIL_HOST_PASSWORD = '7k47d95t'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_SSL = True
 
 AUTHENTICATION_BACKENDS = (
@@ -155,16 +155,16 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = '7814917'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'ADLxG6iho67FuFJsoiLM'
+SOCIAL_AUTH_VK_OAUTH2_KEY = ''
+SOCIAL_AUTH_VK_OAUTH2_SECRET = ''
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '751507064299-5vdsedtav29c3e47e62atlem8o2s1ek6.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'fFZEdkSFZ-UEMEbLLHcEYjqd'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 REDIC_HOST = '192.168.99.100'
 REDIC_PORT = '6379'
-CELERY_REDIS_PASSWORD = "dklafjruwqrujlkafionjoqwri09tuwq90tiqw9uttlskndlkjhfhjflhjdf"
+CELERY_REDIS_PASSWORD = ""
 CELERY_BROKER_URL = 'redis://:' + CELERY_REDIS_PASSWORD + '@' + REDIC_HOST + ':' +  REDIC_PORT + '/0'
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
