@@ -39,7 +39,7 @@ services:
     flower:
         build: .
         container_name: flower
-        command: flower -A kinomonster --basic_auth=admin:aboba228
+        command: flower -A kinomonster --basic_auth=логин:пароль
         volumes:
             - .:/usr/src/kinomonster/
         ports:
@@ -54,7 +54,7 @@ services:
     redis:
         image: redis
         container_name: redis
-        command: redis-server /usr/src/kinomonster/redis/redis.conf --requirepass dklafjruwqrujlkafionjoqwri09tuwq90tiqw9uttlskndlkjhfhjflhjdf
+        command: redis-server /usr/src/kinomonster/redis/redis.conf --requirepass рекваир пасс(в redis.conf)
         volumes: 
             - ./redis/:/usr/src/kinomonster/redis/
         ports: 
